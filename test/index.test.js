@@ -39,36 +39,28 @@ describe('Cruch Pow Model', () => {
     isDetective: true,
     programmingLanguages: ['javascript', 'ruby']
   };
-/*
-  let schema = {
-    single: {type: 'string', value: 'from schema'},
-    user: {type: 'object', value:
-      {
-        id: {type: 'number', value:12345},
-        name: {type: 'string', value:'Sherlock Holmes'},
-        address: {type: 'string', value:'221b Baker Street'},
-        profile: {type: 'object', value: {
-          favorite_color: {type: 'string', value: 'green'},
-          favorite_food: {type: 'string', value: 'indian'}
-        }}
-      },
-    },
-    programming_languages: {type:'array', value: ['javascript', 'ruby']}
-  }
-*/
+
   beforeEach(() => {
     model = new CPModel(schema);
+//    console.log('(*(*(*(', model);
+//    expect(model.user.name).to.equal(null);
     model.create(data);
   });
 
-  it('should get single level elements with get(param)', () => {
-    model.single.should.equal('from schema');
+  xit('should have properties set to null on init', () => {
   });
 
-  it('should get nested elements with prop(param)', () => {
-    model.user.id.should.equal(12345);
-    model.user.name.should.equal('Sherlock Holmes');
-    model.user.profile.favoriteColor.should.equal('green');
+  xit('should allow merging of new data', () => {
+  });
+
+  it('should get single level elements', () => {
+    expect(model.single).to.equal('from schema');
+  });
+
+  it('should get nested elements', () => {
+    expect(model.user.id).to.equal(12345);
+    expect(model.user.name).to.equal('Sherlock Holmes');
+    expect(model.user.profile.favoriteColor).to.equal('green');
   });
 
   it('should get all elements by calling the root', () => {
@@ -76,9 +68,19 @@ describe('Cruch Pow Model', () => {
     expect(model.user).to.have.keys('id', 'name', 'address', 'profile');
   });
 
+  it('should allow setting of nested properties in schema', () => {
+    model.prop('user.id', 321);
+    expect(model.user.id).to.equal(321);
+  });
+
   it('should catch if element is not in schema', () => {
     model.prop('doesntexist', 'value');
-    expect(model.doesntexist).should.equal('undefined');
+    expect(model.doesntexist).to.equal(undefined);
+  });
+
+  it('should catch if element is nested and not in schema', () => {
+    model.prop('user.doesntexist', 'value');
+    expect(model.user.doesntexist).to.equal(undefined);
   });
 
   it('should catch if element is not on the correct type', () => {
@@ -92,8 +94,8 @@ describe('Cruch Pow Model', () => {
     expect(model.single).to.be.equal('from schema');
   });
 
-// allow merge in of new data
-// allow multiple types 'number|string'
+  xit('should allow multiple types', () => {
+  });
 
   //mock api calls
   xit('should send an ajax call of type POST on save with default data', () => {
