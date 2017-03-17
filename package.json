@@ -1,12 +1,13 @@
 {
   "name": "crunchpow-model",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Schema-based model layer for Javascript",
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha test/index.test.js -w",
     "prebuild": "rimraf -rf dist",
-    "build": "babel --out-dir dist src"
+    "build": "babel --out-dir dist src",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": "git@github.com:TheOneTheOnlyDavidBrown/crunchpow-model.git",
   "author": "David Brown <me@davidcbrown.io>",
@@ -17,7 +18,16 @@
     "babel-preset-stage-2": "6.22.0",
     "chai": "3.5.0",
     "mocha": "3.2.0",
-    "rimraf": "2.6.1"
+    "rimraf": "2.6.1",
+    "semantic-release-cli": "^3.0.3"
   },
-  "babel": {"presets": ["es2015", "stage-2"]}
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-2"
+    ]
+  },
+  "devDependencies": {
+    "semantic-release": "^6.3.2"
+  }
 }
