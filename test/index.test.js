@@ -4,14 +4,14 @@ let chai = require('chai'),
   CPModel = require('../src/index.js'),
   should = chai.should();
 
-// Set up Chai matchers
-//chai.should();
-
 describe('Cruch Pow Model', () => {
   let model;
   let schema = {
     shallow: 'string',
     favoriteNumber: 'number|string',
+    nestedArray: {
+        arr: ['element']
+    },
     user: {
       id: 'number',
       name: 'string',
@@ -41,7 +41,14 @@ describe('Cruch Pow Model', () => {
   };
 
   beforeEach(() => {
-    model = new CPModel(schema);
+    model = new CPModel('mymodel',schema);
+  });
+
+  it('should not init with the wrong data type', () => {
+    // if property has a value of a certain type .create() with the property of some other type should not work
+
+    model.create({isDetective: 'yes'});
+    expect(model.isDetective).to.equal(null);
   });
 
   it('should have properties set to null on init', () => {
@@ -97,7 +104,7 @@ describe('Cruch Pow Model', () => {
 
   it('should get all elements by calling the root', () => {
     model.create(data);
-    expect(model).to.have.keys('schema', 'shallow', 'favoriteNumber', 'user', 'aString', 'isDetective', 'programmingLanguages');
+    expect(model).to.have.keys('_schema', '_modelName', 'shallow', 'favoriteNumber', 'user', 'aString', 'isDetective', 'nestedArray', 'programmingLanguages');
     expect(model.user).to.have.keys('id', 'name', 'address', 'profile');
   });
 

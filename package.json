@@ -4,7 +4,7 @@
   "description": "Schema-based model layer for Javascript",
   "main": "index.js",
   "scripts": {
-    "test":"mocha test/index.test.js -w"
+    "test": "mocha test/index.test.js -w"
   },
   "repository": "git@github.com:TheOneTheOnlyDavidBrown/crunchpow-model.git",
   "author": "David Brown <me@davidcbrown.io>",
