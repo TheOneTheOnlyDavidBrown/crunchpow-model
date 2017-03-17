@@ -1,0 +1,16 @@
+{
+  "name": "crunchpow-model",
+  "version": "1.0.0",
+  "description": "Schema-based model layer for Javascript",
+  "main": "index.js",
+  "scripts": {
+    "test":"mocha test/index.test.js -w"
+  },
+  "repository": "git@github.com:TheOneTheOnlyDavidBrown/crunchpow-model.git",
+  "author": "David Brown <me@davidcbrown.io>",
+  "license": "MIT",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0"
+  }
+}
