@@ -2,33 +2,31 @@
 class CPModel {
     constructor(schema) {
         this.schema = schema || {};
-//        Object.assign(this._constructTemplateObject(this, this.schema), this);
+        Object.assign(this, this._constructTemplateObject(this, schema));
     }
     _constructTemplateObject(base, schema) {
+        let rtn = {};
         // loop through and remove all values;
         for(let prop in schema) {
-            if (typeof prop !== 'object' && !!base[prop]) {
-//                console.log('prop',base);
-                console.log('****', base)
-                base[prop] = null;
-            } else if (!!base[prop]) {
-                //console.log('***',prop)
-                return this._constructTemplateObject(base[prop], schema[prop]);
+            if (typeof schema[prop] === 'object') {
+                rtn[prop] = this._constructTemplateObject({}, schema[prop]);
+            } else {
+                rtn[prop] = null;
             }
         }
-
+        return rtn;
     }
     create(data) {
+        // TODO: recursively set the data via _setValue so that type is correct
         Object.assign(this, data);
     }
     prop(propName, propValue) {
-        if (!propValue) return this._getProp(propName);
-        else this._setProp(propName, propValue);
+        this._setProp(propName, propValue);
     }
     _setProp(propName, propValue) {
-        if (this._existsInSchemaWithType(this.schema, propName, propValue) && this._isCorrectType(propName,propValue)) {
+        if (this._existsInSchemaWithType(this.schema, propName, propValue)) {
             // recursive set
-            Object.assign(this._setValue(this, propName, propValue), this);
+            Object.assign(this, this._setValue(this, propName, propValue));
         }
     }
     _setValue(obj, key, value) {
@@ -45,13 +43,10 @@ class CPModel {
         }
 
     }
-    _getProp(propName) {
-        return this[propName];
-    }
     _existsInSchemaWithType(obj, key, value) {
         let exploded = key.split('.');
         if (exploded.length === 1) {
-            return !!obj[key] && typeof value === obj[key];
+            return (!!obj[key] || obj[key] === null) && this._validType(value, obj[key]);
         }
         else if (obj[exploded[0]]) {
             // add first prop el to obj
@@ -61,16 +56,15 @@ class CPModel {
             return this._existsInSchemaWithType(newObj, exploded.join('.'), value);
         }
     }
-
-    _isCorrectType(propName, propValue) {
-        // find in schema
-        // parse schema value
-        // index of parsed schema value exists in typeof propValue
-        return true;
+    _validType(value, objKey) {
+        return  objKey.split('|').find((key) => {
+            if (key === 'array') return Array.isArray(value);
+            return key === typeof value;
+        });
     }
 
     // CRUD
-    //save(){}
-    //remove(){}
+    // save(){}
+    // remove(){}
 }
 module.exports = CPModel;
