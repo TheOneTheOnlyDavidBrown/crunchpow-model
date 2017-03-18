@@ -10,7 +10,7 @@ describe('Cruch Pow Model', () => {
     shallow: 'string',
     favoriteNumber: 'number|string',
     nestedArray: {
-        arr: ['element']
+        arr: 'array'
     },
     user: {
       id: 'number',
