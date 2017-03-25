@@ -1,4 +1,7 @@
 'use strict';
+const Promise = require('bluebird');
+const request = require('superagent');
+
 class CPModel {
     constructor(modelName, schema) {
         this._schema = schema || {};
@@ -76,8 +79,38 @@ class CPModel {
         });
     }
 
-    // CRUD
-    // save(){}
-    // remove(){}
+    _baseEndpoint() {
+        return `api/${this._modelName}`;
+    }
+    _callApi(method, id) {
+        id = id || '';
+        // if this.id exists, use patch/put
+        // else use post
+        let url = `/${this._baseEndpoint()}/${id}`;
+        // promise that sends the object (without schema) to the backend
+        return new Promise((resolve, reject) => {
+            return request[method](url, this)
+                //.use(status())
+                .then((response) => {
+                    resolve(response);
+                }, (error) => {
+                    //console.log('http error', error);
+                    reject(error);
+                });
+        }, (error) => {});
+    }
+    save() {
+        return this._callApi('post');
+    }
+
+    destroy(id) {
+        return this._callApi('del', id);
+    }
+
+    // uses GET to get one (if id is present) or all of the model
+    fetch(id) {
+        return this._callApi('get', id);
+    }
 }
+
 module.exports = CPModel;
