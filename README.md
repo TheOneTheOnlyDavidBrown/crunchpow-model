@@ -14,12 +14,13 @@ This is a microlibrary for better handling of models with schemas. Includes CRUD
 - Use `myModel.myProp` to get property.
 
 ## HTTP usage:
-- using myModel.save() saves the current model
-- using myModel.destroy(id) destroys a model based on the passed in id. Probably will update this to have the id optional and delete the current model.
-- using myModel.fetch([id]) gets the model if id is passed in. Otherwise, it returns a list of all models 'myModel'.
+- Default endpoints mimic the default Ruby on Rails routes.
+- Using myModel.save() saves the current model
+- Using myModel.destroy(id) destroys a model based on the passed in id. Probably will update this to have the id optional and delete the current model.
+- Using myModel.fetch([id]) gets the model if id is passed in. Otherwise, it returns a list of all models 'myModel'.
+- By using `myModel.setBaseEndpoint(newBaseEndpoint)` you can change the root endpoint. Default: `/api/:modelName`.
 
 ## TODO:
 - Allow omitting of schema so structure/types aren't essential.
 - Allow autosaving on setting property. Should use a debounce/throttle function so it does't hit the backend until needed.
-- Allow setting of base url.
 - Find alternates to dependencies so the size is reduced.

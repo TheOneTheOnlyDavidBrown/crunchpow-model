@@ -7,6 +7,7 @@ class CPModel {
         this._schema = schema || {};
         Object.assign(this, this._constructTemplateObject(this, this._schema));
         this._modelName = modelName;
+        this.setBaseEndpoint(`api/${this._modelName}`);
     }
     create(data, path) {
         path = path || [];
@@ -23,11 +24,12 @@ class CPModel {
             }
             path.pop();
         }
-        //console.log(this);
-        //Object.assign(this, data);
     }
     prop(propName, propValue) {
         this._setProp(propName, propValue);
+    }
+    setBaseEndpoint(baseEndpoint) {
+        this._baseEndpoint = baseEndpoint;
     }
     _constructTemplateObject(base, schema) {
         let rtn = {};
@@ -78,25 +80,13 @@ class CPModel {
             return key === typeof value;
         });
     }
-
-    _baseEndpoint() {
-        return `api/${this._modelName}`;
-    }
     _callApi(method, id) {
         id = id || '';
-        // if this.id exists, use patch/put
-        // else use post
-        let url = `/${this._baseEndpoint()}/${id}`;
+        let url = `/${this._baseEndpoint}/${id}`;
         // promise that sends the object (without schema) to the backend
         return new Promise((resolve, reject) => {
             return request[method](url, this)
-                //.use(status())
-                .then((response) => {
-                    resolve(response);
-                }, (error) => {
-                    //console.log('http error', error);
-                    reject(error);
-                });
+                .then((response) => resolve(response), (error) => reject(error));
         }, (error) => {});
     }
     save() {

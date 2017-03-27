@@ -6,7 +6,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Promise = require('bluebird');
+var Promise = require('promise');
 var request = require('superagent');
 
 var CPModel = function () {
@@ -16,6 +16,7 @@ var CPModel = function () {
         this._schema = schema || {};
         Object.assign(this, this._constructTemplateObject(this, this._schema));
         this._modelName = modelName;
+        this.setBaseEndpoint('api/' + this._modelName);
     }
 
     _createClass(CPModel, [{
@@ -35,13 +36,16 @@ var CPModel = function () {
                 }
                 path.pop();
             }
-            //console.log(this);
-            //Object.assign(this, data);
         }
     }, {
         key: 'prop',
         value: function prop(propName, propValue) {
             this._setProp(propName, propValue);
+        }
+    }, {
+        key: 'setBaseEndpoint',
+        value: function setBaseEndpoint(baseEndpoint) {
+            this._baseEndpoint = baseEndpoint;
         }
     }, {
         key: '_constructTemplateObject',
@@ -62,6 +66,8 @@ var CPModel = function () {
         value: function _setProp(propName, propValue) {
             if (this._existsInSchemaWithType(this._schema, propName, propValue)) {
                 Object.assign(this, this._setValue(this, propName, propValue));
+            } else {
+                //Object.assign(this, this._setValue(this, propName, propValue));
             }
         }
     }, {
@@ -101,28 +107,18 @@ var CPModel = function () {
             });
         }
     }, {
-        key: '_baseEndpoint',
-        value: function _baseEndpoint() {
-            return 'api/' + this._modelName;
-        }
-    }, {
         key: '_callApi',
         value: function _callApi(method, id) {
             var _this = this;
 
             id = id || '';
-            // if this.id exists, use patch/put
-            // else use post
-            var url = '/' + this._baseEndpoint() + '/' + id;
+            var url = '/' + this._baseEndpoint + '/' + id;
             // promise that sends the object (without schema) to the backend
             return new Promise(function (resolve, reject) {
-                return request[method](url, _this)
-                //.use(status())
-                .then(function (response) {
-                    resolve(response);
+                return request[method](url, _this).then(function (response) {
+                    return resolve(response);
                 }, function (error) {
-                    //console.log('http error', error);
-                    reject(error);
+                    return reject(error);
                 });
             }, function (error) {});
         }
