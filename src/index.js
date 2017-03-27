@@ -1,5 +1,5 @@
 'use strict';
-const Promise = require('bluebird');
+const Promise = require('promise');
 const request = require('superagent');
 
 class CPModel {

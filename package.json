@@ -18,7 +18,7 @@
   "author": "David Brown <me@davidcbrown.io>",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "3.5.0",
+    "promise": "7.1.1",
     "superagent": "3.5.2"
   },
   "babel": {
