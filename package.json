@@ -47,5 +47,7 @@
   "czConfig": {
     "path": "node_modules/cz-conventional-changelog"
   },
-  "files": ["dist"]
+  "files": [
+    "dist"
+  ]
 }
