@@ -9,6 +9,8 @@ This is a microlibrary for better handling of models with schemas. Includes CRUD
 `npm install --save-exact crunchpow-model`
 or
 `yarn add -DE crunchpow-model`
+or
+Use a CDN: `https://npmcdn.com/crunchpow-model@latest/dist/index.umd.min.js` but it's best to go to this in the browser and copy what it directs to because it will keep the correct version for you.
 
 ## Model Usage:
 - Import package `const CPModel = require('crunchpow-model')`.
