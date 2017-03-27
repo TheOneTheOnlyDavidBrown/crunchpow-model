@@ -2,7 +2,7 @@
 const Promise = require('promise');
 const request = require('superagent');
 
-class CPModel {
+class CrunchPowModel {
     constructor(modelName, schema) {
         this._schema = schema || {};
         Object.assign(this, this._constructTemplateObject(this, this._schema));
@@ -101,4 +101,4 @@ class CPModel {
     }
 }
 
-module.exports = CPModel;
+module.exports = CrunchPowModel;
