@@ -19,9 +19,9 @@ Use a CDN: `https://npmcdn.com/crunchpow-model/dist/index.umd.min.js` but it's b
 ## Model Usage:
 - Import package `require('crunchpow-model')`.
 - Set up schema as `const schema = {myProp: 'string', multipleTypes: 'string|number', user: {name:'string'}}`. Type can be `string|number|array|boolean`.
-- `let myModel = new CrunchPowModel('myModelName' schema);`.
+- `let myModel = new CrunchPowModel('myModelName', schema);`.
 - `myModel.create([dataObj])`. dataObj must be in a format that validates against the schema. This is for getting a model from the back-end and casting it as a crunchpow-model.
-- Use `myModel.prop('myProp','new value')` to set. Nested properties can be set by `myModel.prop('user.name','new value').
+- Use `myModel.prop('myProp','new value')` to set. Nested properties can be set by `myModel.prop('user.name', 'new value').
 - Use `myModel.myProp` to get property.
 
 ## HTTP usage:
