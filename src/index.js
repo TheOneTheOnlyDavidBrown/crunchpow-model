@@ -11,7 +11,6 @@ class CPModel {
     }
     create(data, path) {
         path = path || [];
-        // TODO: recursively set the data via _setValue so that type is correct
         let prop;
         for (prop in data) {
             path.push(prop);
@@ -75,6 +74,7 @@ class CPModel {
         }
     }
     _validType(value, objKey) {
+        if (objKey === '*') return true;
         return  objKey.split('|').find((key) => {
             if (key === 'array') return Array.isArray(value);
             return key === typeof value;
@@ -84,10 +84,8 @@ class CPModel {
         id = id || '';
         let url = `/${this._baseEndpoint}/${id}`;
         // promise that sends the object (without schema) to the backend
-        return new Promise((resolve, reject) => {
-            return request[method](url, this)
-                .then((response) => resolve(response), (error) => reject(error));
-        }, (error) => {});
+        return new Promise((resolve, reject) => request[method](url, this)
+            .then((response) => resolve(response), (error) => reject(error)), (error) => {});
     }
     save() {
         return this._callApi('post');

@@ -23,4 +23,3 @@ This is a microlibrary for better handling of models with schemas. Includes CRUD
 ## TODO:
 - Allow omitting of schema so structure/types aren't essential.
 - Allow autosaving on setting property. Should use a debounce/throttle function so it does't hit the backend until needed.
-- Find alternates to dependencies so the size is reduced.

@@ -2,7 +2,7 @@
   "name": "crunchpow-model",
   "version": "0.0.0-development",
   "description": "Schema-based model layer for Javascript",
-  "main": "dist/index.js",
+  "main": "dist/index.umd.min.js",
   "scripts": {
     "commit": "git-cz",
     "test": "mocha test/index.test.js -w",

@@ -23,7 +23,6 @@ var CPModel = function () {
         key: 'create',
         value: function create(data, path) {
             path = path || [];
-            // TODO: recursively set the data via _setValue so that type is correct
             var prop = void 0;
             for (prop in data) {
                 path.push(prop);
@@ -66,8 +65,6 @@ var CPModel = function () {
         value: function _setProp(propName, propValue) {
             if (this._existsInSchemaWithType(this._schema, propName, propValue)) {
                 Object.assign(this, this._setValue(this, propName, propValue));
-            } else {
-                //Object.assign(this, this._setValue(this, propName, propValue));
             }
         }
     }, {
@@ -101,6 +98,7 @@ var CPModel = function () {
     }, {
         key: '_validType',
         value: function _validType(value, objKey) {
+            if (objKey === '*') return true;
             return objKey.split('|').find(function (key) {
                 if (key === 'array') return Array.isArray(value);
                 return key === (typeof value === 'undefined' ? 'undefined' : _typeof(value));

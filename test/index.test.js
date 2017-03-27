@@ -3,7 +3,7 @@
 'use strict';
 let chai = require('chai'),
     expect = chai.expect,
-    CPModel = require('../src/index.js'),
+    CPModel = require('../src/index'),
     should = chai.should(),
     chaiAsPromised = require("chai-as-promised"),
     nock = require('nock');
@@ -16,6 +16,7 @@ describe('Cruch Pow Model', () => {
         let schema = {
             shallow: 'string',
             favoriteNumber: 'number|string',
+            wildcard: '*',
             nestedArray: {
                 arr: 'array'
             },
@@ -115,7 +116,7 @@ describe('Cruch Pow Model', () => {
 
         it('should get all elements by calling the root', () => {
             model.create(data);
-            expect(model).to.have.keys('_schema', '_baseEndpoint', '_modelName', 'shallow', 'favoriteNumber', 'user', 'aString', 'isDetective', 'nestedArray', 'programmingLanguages');
+            expect(model).to.include.keys('_schema', '_baseEndpoint', '_modelName', 'shallow', 'favoriteNumber', 'user', 'aString', 'isDetective', 'nestedArray', 'programmingLanguages');
             expect(model.user).to.have.keys('id', 'name', 'address', 'profile');
         });
 
@@ -159,6 +160,16 @@ describe('Cruch Pow Model', () => {
             expect(model.favoriteNumber).to.equal(7);
             model.prop('favoriteNumber', true);
             expect(model.favoriteNumber).to.equal(7);
+        });
+
+        it('should * as a type', () => {
+            model.create(data);
+            model.prop('wildcard', 'seven');
+            expect(model.wildcard).to.equal('seven');
+            model.prop('wildcard', 7);
+            expect(model.wildcard).to.equal(7);
+            model.prop('wildcard', true);
+            expect(model.wildcard).to.equal(true);
         });
     });
 
