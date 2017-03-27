@@ -5,6 +5,11 @@
 
 This is a microlibrary for better handling of models with schemas. Includes CRUD functions to alter the model on the backend without having to write the CRUD functions (promise returned) in your service.
 
+## Installation
+`npm install --save-exact crunchpow-model`
+or
+`yarn add -DE crunchpow-model`
+
 ## Model Usage:
 - Import package `const CPModel = require('crunchpow-model')`.
 - Set up schema as `const schema = {myProp: 'string', multipleTypes: 'string|number', user: {name:'string'}}`. Type can be `string|number|array|boolean`.
