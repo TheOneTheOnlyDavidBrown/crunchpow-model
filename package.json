@@ -44,8 +44,10 @@
     "semantic-release": "6.3.2",
     "webpack": "2.3.2"
   },
-  "czConfig": {
-    "path": "node_modules/cz-conventional-changelog"
+  "config": {
+    "commitizen": {
+        "path": "node_modules/cz-conventional-changelog"
+    }
   },
   "files": [
     "dist"
