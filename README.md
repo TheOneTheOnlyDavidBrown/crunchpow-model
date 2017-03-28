@@ -6,7 +6,7 @@
 This is a microlibrary for better handling of models with schemas. Includes CRUD functions to alter the model on the backend without having to write the CRUD functions (promise returned) in your service.
 
 ## Installation
-`npm install --save-exact crunchpow-model`
+`npm install --save --save-exact crunchpow-model`
 
 or
 
