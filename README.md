@@ -30,7 +30,3 @@ Use a CDN: `https://npmcdn.com/crunchpow-model/dist/index.umd.min.js` but it's b
 - Using myModel.destroy(id) destroys a model based on the passed in id. Probably will update this to have the id optional and delete the current model.
 - Using myModel.fetch([id]) gets the model if id is passed in. Otherwise, it returns a list of all models 'myModel'.
 - By using `myModel.setBaseEndpoint(newBaseEndpoint)` you can change the root endpoint. Default: `/api/:modelName`.
-
-## TODO:
-- Allow omitting of schema so structure/types aren't essential.
-- Allow autosaving on setting property. Should use a debounce/throttle function so it does't hit the backend until needed.
